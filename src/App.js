@@ -1,24 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import data from './data';
+import Article from './Article';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [theme, setTheme] = useState('light-theme');
+
+  const toogleTheme = () => {
+    if(theme === 'light-theme') {
+     setTheme('dark-theme');
+    } else {
+      setTheme('light-theme');
+
+    }
+  }
+
+  useEffect(() => {
+    document.documentElement.className = theme
+  }, [theme]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <nav>
+        <h1>overracted</h1>
+        <button className='btn' onClick={toogleTheme}>Toogle</button>
+      </nav>
+      <section className='articles'>
+        {data.map(item => {
+          return <Article key={item.id} {...item} />
+        })}
+      </section>
+      <h2>Dark mode starter</h2>
+    </main>
   );
 }
 
